@@ -121,9 +121,9 @@ const TableCategory: React.FC<TableCategoryProps> = ({
               </TableCell>
             </TableRow>
           ) : paginatedItems.length > 0 ? (
-            paginatedItems.map((cat) => (
+            paginatedItems.map((cat,index) => (
               <TableRow key={cat.id}>
-                <TableCell>{cat.id}</TableCell>
+                <TableCell>{page *rowsPerPage + index + 1}</TableCell>
                 <TableCell>{cat.name}</TableCell>
                 <TableCell>{truncateText(cat.description)}</TableCell>
                 <TableCell>

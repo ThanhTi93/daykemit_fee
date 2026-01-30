@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import TableCourse from "./TableCourse";
-import ModalAddCourse from "./ModalAddCourse";
 import ModalDelete from "../../components/ModalDelete";
 import {
   createCourseThunk,
@@ -11,10 +10,11 @@ import {
   deleteCourseThunk,
 } from "../../../features/courses/courses.thunk";
 import type { CreateCourseDto } from "../../../features/courses/courses.types";
+import CourseFormModal from "./CourseFormModal";
 
 const CoursePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items } = useAppSelector((state) => state.courses);
+  const { items, loading } = useAppSelector((state) => state.courses);
 
   const [openAddEdit, setOpenAddEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -35,13 +35,17 @@ const CoursePage: React.FC = () => {
     setOpenDelete(true);
   };
 
-  const handleSubmitAddEdit = (data: CreateCourseDto) => {
-    if (selectedId) {
-      dispatch(updateCourseThunk({ id: selectedId, data }));
-    } else {
-      dispatch(createCourseThunk(data));
-    }
-  };
+const handleSubmitAddEdit = async (data: CreateCourseDto) => {
+  if (selectedId) {
+    await dispatch(updateCourseThunk({ id: selectedId, data }));
+  } else {
+    console.log(data);
+    
+    await dispatch(createCourseThunk(data));
+  }
+  setOpenAddEdit(false);
+};
+
 
   const handleConfirmDelete = () => {
     if (selectedId) {
@@ -59,13 +63,14 @@ const CoursePage: React.FC = () => {
       />
 
       {/* Modal Add/Edit */}
-      <ModalAddCourse
+      <CourseFormModal
         open={openAddEdit}
-        handleClose={() => setOpenAddEdit(false)}
+        onClose={() => setOpenAddEdit(false)}
         initialData={
           selectedId ? items.find((i) => i.id === selectedId) || null : null
         }
         onSubmit={handleSubmitAddEdit}
+        loading={loading}
       />
 
       {/* Modal Delete */}

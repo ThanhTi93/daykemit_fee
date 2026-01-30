@@ -1,6 +1,6 @@
 import { axiosClient } from "../../utils/axiosClient";
 import { API_ENDPOINTS } from "../endpoints";
-import type { Course, CreateCourseDto, UpdateCourseDto, DeleteResponse } from "./courses.types";
+import type { Course, CreateCourseDto, DeleteResponse } from "./courses.types";
 
 const { courses } = API_ENDPOINTS;
 
@@ -17,10 +17,24 @@ export const fetchCourseById = async (id: number): Promise<Course> => {
 };
 
 // Tạo course mới
-export const createCourse = async (data: CreateCourseDto): Promise<Course> => {
-  const response = await axiosClient.post<Course>(courses, data);
+export const createCourse = async (
+  data: CreateCourseDto
+): Promise<Course> => {
+  const formData = new FormData();
+
+  formData.append("name", data.name);
+  formData.append("description", data.description);
+
+  // 🔥 QUAN TRỌNG
+  formData.append("categoryIds", JSON.stringify(data.categoryIds));
+
+  if (data.imgUrl) {
+    formData.append("imgUrl", data.imgUrl); // 👈 TRÙNG upload.single("imgUrl")
+  }
+  const response = await axiosClient.post<Course>(courses, formData);
   return response.data;
 };
+
 
 // Cập nhật course
 export const updateCourse = async (

@@ -2,9 +2,6 @@ import axios from "axios";
 
 export const axiosClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // đổi theo backend của bạn
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 // Có thể thêm interceptors nếu cần xử lý token

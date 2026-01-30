@@ -6,7 +6,7 @@ import {
   updateCourse,
   deleteCourse,
 } from "./courses.api";
-import type { Course, CreateCourseDto, UpdateCourseDto, DeleteResponse } from "./courses.types";
+import type { Course, CreateCourseDto, DeleteResponse } from "./courses.types";
 
 // GET all
 export const getCoursesThunk = createAsyncThunk<Course[]>(

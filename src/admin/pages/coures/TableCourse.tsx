@@ -31,8 +31,6 @@ const TableCourse: React.FC<TableCourseProps> = ({
   onDelete,
 }) => {
   const { items, loading } = useAppSelector((state) => state.courses);
-  const { items: categories } = useAppSelector((state) => state.categories);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState("");
@@ -126,9 +124,8 @@ const TableCourse: React.FC<TableCourseProps> = ({
                 <TableCell>{course.name}</TableCell>
                 <TableCell>{truncateText(course.description)}</TableCell>
                 <TableCell>
-                  {course.categoryIds?.map((cid) => {  
-                    const cat = categories.find((c) => c.id == cid);
-                    return <Chip key={cid} label={cat?.name || "Unknown"} sx={{ mr: 0.5 }} />;
+                  {course.categories?.map((cid) => {  
+                    return <Chip key={cid} label={cid?.name || "Unknown"} sx={{ mr: 0.5 }} />;
                   })}
                 </TableCell>
                 <TableCell>

@@ -1,26 +1,26 @@
+// Entity trả về từ backend
 export interface Course {
   id: number;
   name: string;
   description: string;
-  imgUrl: string;
-  categoryIds : number[];
+  categoryIds: number[];
   created_at: string;
   updated_at: string;
 }
 
+// Form dùng cho react-hook-form
 export interface CreateCourseDto {
   name: string;
   description: string;
-  imgUrl: string;
-  categoryIds : number[];
+  categoryIds: number[];
+  imgUrl?: File | null;
 }
 
-export interface UpdateCourseDto {
-  id: string;
-  name: string;
-  description: string;
-  imgUrl: string;
-  categoryIds : number[];
+
+// Payload update
+export interface UpdateCoursePayload {
+  id: number;
+  data: FormData;
 }
 
 export interface DeleteResponse {
