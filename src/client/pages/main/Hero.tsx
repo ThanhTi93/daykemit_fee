@@ -1,136 +1,103 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Button, Card, CardContent, CardHeader, Chip } from "@mui/material";
-import { FaChevronRight, FaStar, FaAward, FaBookOpen, FaUsers } from "react-icons/fa";
+import { ArrowRight, Star, Users, Trophy, BookOpen } from "lucide-react";
 
-function Hero() {
+export default function HeroSection() {
   return (
-    <section style={{ position: "relative", overflow: "hidden" }}>
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "linear-gradient(to bottom, #EEF2FF, white, white)",
-        }}
-      />
-      <div
-        style={{
-          position: "relative",
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "7rem 1.5rem 5rem",
-        }}
-      >
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem", alignItems: "center" }}>
-          {/* Left Column */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <Chip
-              label="Trung tâm dạy lập trình thực chiến"
-              color="primary"
-              sx={{ mb: 2 }}
-            />
-            <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "#0f172a", lineHeight: 1.2 }}>
-              DaykemIT — Học để làm{" "}
-              <span style={{ background: "linear-gradient(to right, #4F46E5, #9333EA)", WebkitBackgroundClip: "text", color: "transparent" }}>
-                Developer
-              </span>
-            </h1>
-            <p style={{ marginTop: "1rem", fontSize: "1.125rem", color: "#475569", maxWidth: "36rem" }}>
-              Lộ trình cá nhân hoá, mentor 1–1, dự án thực chiến và hỗ trợ tìm việc.
-              Xây dựng sự nghiệp công nghệ của bạn từ hôm nay.
-            </p>
-            <div style={{ marginTop: "1.5rem", display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-              <Button
-                variant="contained"
-                href="#contact"
-                endIcon={<FaChevronRight />}
-              >
-                Đăng ký tư vấn
-              </Button>
-              <Button
-                variant="outlined"
-                href="#courses"
-              >
-                Xem khoá học
-              </Button>
-            </div>
-            <div style={{ marginTop: "2rem", display: "flex", gap: "1rem", fontSize: "0.875rem", color: "#64748b" }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <FaStar style={{ marginRight: "0.25rem" }} /> 4.9/5 từ 1,200+ học viên
-              </div>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <FaAward style={{ marginRight: "0.25rem" }} /> Cam kết đầu ra
-              </div>
-            </div>
-          </motion.div>
+    <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-slate-200 to-slate-100">
+      <div className="mx-auto mt-4 grid max-w-screen-2xl grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:px-8">
+        <div>
+          <div className="mb-5 inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+            Trung tâm đào tạo lập trình uy tín
+          </div>
 
-          {/* Right Column */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}>
-            <div style={{ position: "relative" }}>
-              <div
-                style={{
-                  position: "absolute",
-                  inset: "-1rem",
-                  background: "linear-gradient(to right, #C7D2FE, #E9D5FF)",
-                  filter: "blur(40px)",
-                  opacity: 0.6,
-                  borderRadius: "1.5rem",
-                }}
-              />
-              <div style={{ position: "relative", borderRadius: "1.5rem", border: "1px solid #E2E8F0", background: "white", padding: "1.5rem", boxShadow: "0 8px 30px rgba(0,0,0,0.1)" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                  <Card sx={{ gridColumn: "1 / span 2" }}>
-                    <CardHeader title="Full-Stack Roadmap" sx={{ pb: 0 }} />
-                    <CardContent sx={{ fontSize: "0.875rem", color: "#475569" }}>
-                      HTML/CSS → JS → Node.js → DB → React → DevOps
-                    </CardContent>
-                  </Card>
+          <h1 className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-slate-950 md:text-5xl">
+            Học lập trình để đi làm
 
-                  <Card>
-                    <CardHeader
-                      title={
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <FaBookOpen style={{ marginRight: "0.5rem" }} /> 120+ giờ
-                        </div>
-                      }
-                      sx={{ pb: 0 }}
-                    />
-                    <CardContent sx={{ fontSize: "0.875rem", color: "#475569" }}>
-                      Bài giảng chọn lọc
-                    </CardContent>
-                  </Card>
+          </h1>
+          <p className="text-blue-600 text-3xl mt-2 md:text-5xl font-extrabold leading-tight tracking-tight">Từ số 0 → Dev chuyên nghiệp</p>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
+            Lộ trình bài bản, mentor 1 kèm 1, dự án thực chiến và cam kết đồng
+            hành đến khi bạn có việc làm.
+          </p>
 
-                  <Card>
-                    <CardHeader
-                      title={
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <FaUsers style={{ marginRight: "0.5rem" }} /> 1–1 Mentoring
-                        </div>
-                      }
-                      sx={{ pb: 0 }}
-                    />
-                    <CardContent sx={{ fontSize: "0.875rem", color: "#475569" }}>
-                      Theo sát tiến độ
-                    </CardContent>
-                  </Card>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700">
+              Đăng ký tư vấn miễn phí
+              <ArrowRight size={18} />
+            </button>
 
-                  <Card sx={{ gridColumn: "1 / span 2" }}>
-                    <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div>
-                        <div style={{ fontWeight: 600 }}>Tỉ lệ pass việc</div>
-                        <div style={{ fontSize: "0.875rem", color: "#475569" }}>Trong 2–4 tháng</div>
-                      </div>
-                      <div style={{ fontSize: "1.875rem", fontWeight: "bold" }}>87%</div>
-                    </CardContent>
-                  </Card>
+            <button className="rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-bold text-slate-700 transition hover:border-blue-500 hover:text-blue-600">
+              Nhận lộ trình học
+            </button>
+          </div>
+
+          <div className="mt-8 flex items-center gap-4">
+            <div className="flex -space-x-3">
+              {["A", "B", "C", "D"].map((item) => (
+                <div
+                  key={item}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-slate-200 text-sm font-bold"
+                >
+                  {item}
                 </div>
-              </div>
+              ))}
             </div>
-          </motion.div>
+
+            <div>
+              <div className="flex items-center gap-1 text-yellow-400">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={index} size={16} fill="currentColor" />
+                ))}
+                <span className="ml-2 text-sm font-bold text-slate-900">
+                  4.9/5
+                </span>
+              </div>
+              <p className="text-sm text-slate-500">
+                Hơn 1.200+ học viên đã đồng hành cùng DaykemIT
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="overflow-hidden rounded-[2rem] border border-white bg-white shadow-2xl shadow-blue-100">
+            <img
+              src="https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/481963181_530726233383163_7152354227429149213_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=NfE8QemYWv0Q7kNvwFHe5F4&_nc_oc=Adq0G2ChrOKhwI4TJyQK5kb0l_dnaViufDekojGiMjLVMpHcf9Ck1aapliV186V_8yU&_nc_zt=23&_nc_ht=scontent.fdad2-1.fna&_nc_gid=3Bs7OZtKCslLiOzZJUQsEg&_nc_ss=7a2a8&oh=00_Af-JsKDhRy6WChE-gm2qmwYe_XfuIYLHxUTCUJSDjvHl9A&oe=6A26E592"
+              alt="Học viên DaykemIT đang học lập trình cùng mentor"
+              className="h-[420px] w-full object-cover"
+            />
+          </div>
+
+          <div className="absolute -bottom-8 left-6 right-6 grid grid-cols-2 gap-3 rounded-2xl  bg-black/40 text-amber-50 p-5 shadow-xl md:grid-cols-4">
+            <Stat icon={<Users size={20} />} number="1,200+" label="Học viên" />
+            <Stat icon={<Trophy size={20} />} number="87%" label="Có việc" />
+            <Stat icon={<Users size={20} />} number="50+" label="Đối tác" />
+            <Stat icon={<BookOpen size={20} />} number="120+" label="Giờ học" />
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-export default Hero;
+function Stat({
+  icon,
+  number,
+  label,
+}: {
+  icon: React.ReactNode;
+  number: string;
+  label: string;
+}) {
+  return (
+    <div className="text-center flex items-center gap-3">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+        {icon}
+      </div>
+      <div>
+        <p className="text-lg font-extrabold">{number}</p>
+        <p className="text-xs text-white">{label}</p>
+      </div>
+
+    </div>
+  );
+}

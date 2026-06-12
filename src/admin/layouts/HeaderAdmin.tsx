@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaBars, FaSearch, FaBell, FaGlobe, FaCog, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaBell, FaGlobe, FaCog, FaUser, FaSignOutAlt } from "react-icons/fa";
 
 const HeaderAdmin: React.FC = () => {
   const [open, setOpen] = useState(false);

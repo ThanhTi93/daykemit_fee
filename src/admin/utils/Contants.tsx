@@ -6,7 +6,7 @@ export const LISTMENU = [
         title: "Manage Course",
         icon : <MdLibraryBooks className="text-2xl text-indigo-600" />,
         items : [
-            {name: "Courses", path : "/courses"},
+            {name: "Courses", path : "/admin/courses"},
             {name: "Courses Offers", path : "/course-offers"},
             {name: "Entrollments", path : "/entrollments"},
         ]
@@ -14,7 +14,7 @@ export const LISTMENU = [
         title: "Manage User",
         icon : <MdManageAccounts className="text-2xl text-blue-600" />,
         items : [
-            {name: "Accounts", path : "/accounts"},
+            {name: "Accounts", path : "/admin/accounts"},
             {name: "Mentors", path : "/mentors"},
         ]
     },

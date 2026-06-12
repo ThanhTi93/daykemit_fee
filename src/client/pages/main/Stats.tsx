@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Stats() {
      const items = [
     { value: "1,200+", label: "Học viên tốt nghiệp" },

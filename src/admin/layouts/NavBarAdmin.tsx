@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { LISTMENU } from "../utils/Contants";
 import { IoLogoCss3, IoMdArrowDropright } from "react-icons/io";
 import { TiThMenuOutline } from "react-icons/ti";
@@ -95,7 +95,7 @@ function NavBarAdmin() {
             Pages
           </h2>
         )}
-        <Link to={"/categories"} className="p-2 mt-2 flex items-center gap-2 rounded-xl bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all cursor-pointer">
+        <Link to={"/admin/categories"} className="p-2 mt-2 flex items-center gap-2 rounded-xl bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all cursor-pointer">
           <MdCategory className="text-2xl text-yellow-300" />
           {show && <p className="font-medium">Categories</p>}
         </Link>

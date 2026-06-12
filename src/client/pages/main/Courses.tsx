@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Card, CardContent, CardActions, Grid, CardHeader, Chip, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { FaChevronRight } from "react-icons/fa";
 
 function Courses() {

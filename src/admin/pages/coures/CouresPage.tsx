@@ -9,47 +9,49 @@ import {
   updateCourseThunk,
   deleteCourseThunk,
 } from "../../../features/courses/courses.thunk";
-import type { CreateCourseDto } from "../../../features/courses/courses.types";
+import type { Course, CreateCourseDto } from "../../../features/courses/courses.types";
 import CourseFormModal from "./CourseFormModal";
 
 const CoursePage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items, loading } = useAppSelector((state) => state.courses);
+  const { loading } = useAppSelector((state) => state.courses);
 
   const [openAddEdit, setOpenAddEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const handleAdd = () => {
-    setSelectedId(null);
+    setSelectedCourse(null);
     setOpenAddEdit(true);
   };
 
-  const handleEdit = (id: number) => {
-    setSelectedId(id);
+  const handleEdit = (courses: Course) => {
+    setSelectedCourse(courses);
     setOpenAddEdit(true);
   };
 
-  const handleDelete = (id: number) => {
-    setSelectedId(id);
+  const handleDelete = (courses: Course) => {
+    setSelectedCourse(courses);
     setOpenDelete(true);
   };
 
-const handleSubmitAddEdit = async (data: CreateCourseDto) => {
-  if (selectedId) {
-    await dispatch(updateCourseThunk({ id: selectedId, data }));
-  } else {
-    console.log(data);
+  const handleSubmitAddEdit = async (data: CreateCourseDto) => {
+    console.log("vao day");
     
-    await dispatch(createCourseThunk(data));
-  }
-  setOpenAddEdit(false);
-};
+    if (selectedCourse?.id) {
+      console.log(data);
+      await dispatch(updateCourseThunk({ id: selectedCourse?.id, data }));
+    } else {
+      console.log("adđ");
+      await dispatch(createCourseThunk(data));
+    }
+    setOpenAddEdit(false);
+  };
 
 
   const handleConfirmDelete = () => {
-    if (selectedId) {
-      dispatch(deleteCourseThunk(selectedId));
+    if (selectedCourse?.id) {
+      dispatch(deleteCourseThunk(selectedCourse?.id));
     }
     setOpenDelete(false);
   };
@@ -67,7 +69,18 @@ const handleSubmitAddEdit = async (data: CreateCourseDto) => {
         open={openAddEdit}
         onClose={() => setOpenAddEdit(false)}
         initialData={
-          selectedId ? items.find((i) => i.id === selectedId) || null : null
+          selectedCourse
+            ? {
+              name: selectedCourse.name,
+              description: selectedCourse.description,
+              categoryIds:
+                selectedCourse.categories?.map((c) => c.id) || [],
+              images:
+                selectedCourse.images?.map(
+                  (img) => img.imgUrl
+                ) || [],
+            }
+            : null
         }
         onSubmit={handleSubmitAddEdit}
         loading={loading}

@@ -25,12 +25,14 @@ export const createCourse = async (
   formData.append("name", data.name);
   formData.append("description", data.description);
 
-  // 🔥 QUAN TRỌNG
-  formData.append("categoryIds", JSON.stringify(data.categoryIds));
+  formData.append(
+    "categoryIds",
+    data.categoryIds.join(",")
+  );
 
-  if (data.imgUrl) {
-    formData.append("imgUrl", data.imgUrl); // 👈 TRÙNG upload.single("imgUrl")
-  }
+  data.images.forEach((file) => {
+    formData.append("images", file);
+  });
   const response = await axiosClient.post<Course>(courses, formData);
   return response.data;
 };
@@ -41,7 +43,36 @@ export const updateCourse = async (
   id: number,
   data: CreateCourseDto
 ): Promise<Course> => {
-  const response = await axiosClient.put<Course>(`${courses}/${id}`, data);
+    const formData = new FormData();
+
+  formData.append("name", data.name);
+  formData.append("description", data.description);
+
+  formData.append(
+    "categoryIds",
+    data.categoryIds.join(",")
+  );
+   data.images?.forEach((item) => {
+    // ảnh cũ
+    if (typeof item === "string") {
+      formData.append("oldImages",item);
+    }
+    // ảnh mới
+    else {
+      formData.append("images", item);
+    }
+  });
+   console.log(formData);
+   
+   const response = await axiosClient.put<Course>(
+    `${courses}/${id}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
   return response.data;
 };
 

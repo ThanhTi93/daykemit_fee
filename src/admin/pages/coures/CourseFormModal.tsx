@@ -5,7 +5,10 @@ import {
   Box,
   Button,
   Typography,
+  Stack,
+  IconButton,
 } from "@mui/material";
+import { FaTrash } from "react-icons/fa";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ModalForm } from "../../components/ModalForm";
@@ -17,7 +20,7 @@ const defaultValues: CreateCourseDto = {
   name: "",
   description: "",
   categoryIds: [],
-  imgUrl: null,
+  images: [],
 };
 
 interface ModalAddCourseProps {
@@ -44,12 +47,29 @@ const CourseFormModal: React.FC<ModalAddCourseProps> = ({
     defaultValues,
   });
 
-  const imgFile = form.watch("imgUrl");
+  const imgFiles = form.watch("images");
 
-  const previewUrl = useMemo(() => {
-    if (!imgFile) return null;
-    return URL.createObjectURL(imgFile);
-  }, [imgFile]);
+  const previewUrls = useMemo(() => {
+    if (!imgFiles || imgFiles.length === 0) return [];
+
+    return imgFiles.map((file) => {
+      // nếu là ảnh cũ (string url)
+      if (typeof file === "string") {
+        return file;
+      }
+
+      // nếu là file mới upload
+      return URL.createObjectURL(file);
+    });
+  }, [imgFiles]);
+
+  useEffect(() => {
+    if (initialData) {
+      form.reset(initialData);
+    } else {
+      form.reset(defaultValues);
+    }
+  }, [initialData, form]);
 
   return (
     <ModalForm<CreateCourseDto>
@@ -95,21 +115,27 @@ const CourseFormModal: React.FC<ModalAddCourseProps> = ({
         )}
       />
 
-      {/* Image */}
+      {/* Multiple Images */}
       <Controller
-        name="imgUrl"
+        name="images"
         control={form.control}
         render={({ field, fieldState }) => (
           <Box mt={2}>
             <Button variant="outlined" component="label">
-              Choose Image
+              Choose Images
               <input
                 hidden
                 type="file"
                 accept="image/*"
-                onChange={(e) =>
-                  field.onChange(e.target.files?.[0] ?? null)
-                }
+                multiple
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+
+                  field.onChange([
+                    ...(field.value || []),
+                    ...files,
+                  ]);
+                }}      
               />
             </Button>
 
@@ -119,19 +145,60 @@ const CourseFormModal: React.FC<ModalAddCourseProps> = ({
               </Typography>
             )}
 
-            {previewUrl && (
-              <Box mt={2}>
-                <img
-                  src={previewUrl}
-                  alt="preview"
-                  style={{
-                    width: "100%",
-                    maxHeight: 200,
-                    objectFit: "cover",
-                    borderRadius: 8,
-                  }}
-                />
-              </Box>
+            {/* Preview Images */}
+            {previewUrls.length > 0 && (
+              <Stack
+                direction="row"
+                spacing={2}
+                mt={2}
+                flexWrap="wrap"
+              >
+                {previewUrls.map((url, index) => (
+                  <Box
+                    key={index}
+                    position="relative"
+                    width={120}
+                    height={120}
+                  >
+                    <img
+                      src={url}
+                      alt={`preview-${index}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: 8,
+                        border: "1px solid #ddd",
+                      }}
+                    />
+
+                    {/* Remove */}
+                    <IconButton
+                      size="small"
+                      onClick={() => {
+                        const newFiles = [...imgFiles];
+                        newFiles.splice(index, 1);
+
+                        field.onChange(newFiles);
+                      }}
+                      sx={{
+                        position: "absolute",
+                        top: 5,
+                        right: 5,
+                        backgroundColor: "#fff",
+                        "&:hover": {
+                          backgroundColor: "#f5f5f5",
+                        },
+                      }}
+                    >
+                      <FaTrash
+                        size={12}
+                        color="red"
+                      />
+                    </IconButton>
+                  </Box>
+                ))}
+              </Stack>
             )}
           </Box>
         )}

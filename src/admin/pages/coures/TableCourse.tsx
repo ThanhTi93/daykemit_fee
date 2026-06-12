@@ -18,11 +18,12 @@ import {
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { useAppSelector } from "../../../store/hooks";
 import { truncateText } from "../../../utils/functionContanst";
+import type { Course } from "../../../features/courses/courses.types";
 
 interface TableCourseProps {
   onAdd: () => void;
-  onEdit: (id: number) => void;
-  onDelete: (id: number) => void;
+  onEdit: (course: Course) => void;
+  onDelete: (course: Course) => void;
 }
 
 const TableCourse: React.FC<TableCourseProps> = ({
@@ -89,7 +90,7 @@ const TableCourse: React.FC<TableCourseProps> = ({
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-              <TableCell>ImgUrl</TableCell>
+            <TableCell>ImgUrl</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Categories</TableCell>
@@ -110,13 +111,16 @@ const TableCourse: React.FC<TableCourseProps> = ({
             paginatedItems.map((course) => (
               <TableRow key={course.id}>
                 <TableCell>{course.id}</TableCell>
-                    <TableCell>
-                  {course.imgUrl ? (
-                    <img
-                      src={course.imgUrl}
-                      alt={course.name}
-                      style={{ width: 60, height: 40, objectFit: "cover", borderRadius: 4 }}
-                    />
+                <TableCell>
+                  {course.images.length > 0 ? (
+                    course.images.map((img) => (
+                      <img
+                        src={img.imgUrl}
+                        alt="#"
+                        style={{ width: 60, height: 40, objectFit: "cover", borderRadius: 4 }}
+                      />
+                    ))
+
                   ) : (
                     "-"
                   )}
@@ -124,21 +128,21 @@ const TableCourse: React.FC<TableCourseProps> = ({
                 <TableCell>{course.name}</TableCell>
                 <TableCell>{truncateText(course.description)}</TableCell>
                 <TableCell>
-                  {course.categories?.map((cid) => {  
-                    return <Chip key={cid} label={cid?.name || "Unknown"} sx={{ mr: 0.5 }} />;
+                  {course.categories?.map((cid) => {
+                    return <Chip  label={cid?.name || "Unknown"} sx={{ mr: 0.5 }} />;
                   })}
                 </TableCell>
                 <TableCell>
-                  {course.created_at ? new Date(course.created_at).toLocaleString() : "-"}
+                  {course.createdAt ? new Date(course.createdAt).toLocaleString() : "-"}
                 </TableCell>
                 <TableCell>
-                  {course.updated_at ? new Date(course.updated_at).toLocaleString() : "-"}
+                  {course.updatedAt ? new Date(course.updatedAt).toLocaleString() : "-"}
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton color="primary" onClick={() => onEdit(course.id)}>
+                  <IconButton color="primary" onClick={() => onEdit(course)}>
                     <MdEdit />
                   </IconButton>
-                  <IconButton color="error" onClick={() => onDelete(course.id)}>
+                  <IconButton color="error" onClick={() => onDelete(course)}>
                     <MdDeleteForever />
                   </IconButton>
                 </TableCell>

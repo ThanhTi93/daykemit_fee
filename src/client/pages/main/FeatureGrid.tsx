@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, CardHeader } from '@mui/material';
 import { FaUserTie, FaMagic, FaCode, FaShieldAlt } from 'react-icons/fa';
 
